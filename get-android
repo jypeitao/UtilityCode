@@ -1,0 +1,9 @@
+#!/bin/bash
+PATH=./bin:$PATH
+repo sync
+while [ $? = 1 ]
+do
+echo "sync again"
+sleep 3
+repo sync
+done
