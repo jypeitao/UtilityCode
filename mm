@@ -5,7 +5,7 @@ echo $1
 if [ $? = 0 ]
 then
     result=`grep -P "^Install.*" $TEMP | sed s/Install\:\ //`
-    if [ $result = ""]
+    if [ $result == ""]
     then
     echo "Nothing to do"
     else
