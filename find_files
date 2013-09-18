@@ -1,0 +1,24 @@
+#!/usr/bin/perl
+#&find_fileindir(".");
+
+if($#ARGV != -1){
+    &find_fileindir($ARGV[0]);
+}else{
+    &find_fileindir(".");
+}
+
+sub find_fileindir(){
+    local($dir)=@_;
+    opendir(DIR,"$dir"||die "can not open this $dir");
+    local @files=readdir(DIR);
+    closedir(DIR);
+    for $file (@files){
+        next if($file=~m/\.$/||$file=~m/\.\.$/);
+        if($file=~/^Android\.mk$/i){
+            printf "$dir\/$file \n";
+        }
+        elsif(-d "$dir\/$file"){
+            find_fileindir("$dir/$file");
+        }
+    }
+}
