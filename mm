@@ -5,32 +5,32 @@ echo $1
 if [ $? = 0 ]
 then
     result=`grep -P "^Install.*" $TEMP | sed s/Install\:\ //`
-    if [ $result == ""]
+    if [ "$result" == "" ]
     then
     echo "Nothing to do"
     else
     for i in $(echo ${result})
     do
       echo "i=" $i
-    
+
       temp=${i##*ckt89_we_jb2/}
       i=$i" "${temp%/*}
       echo "$i"
-      #adb remount
+      adb remount
       while [ $? -ne 0 ]
       do
         echo "be sure connected phone?"
         read input
-        #adb remount
+        adb remount
       done
-      #adb push $i
+      adb push $i
       while [ $? -ne 0 ]
       do
         echo $i
-        #adb push $i
+        adb push $i
       done
     done
-    #rm $TEMP
+    rm $TEMP
     echo "OK"
     fi
 fi
