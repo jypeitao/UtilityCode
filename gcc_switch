@@ -1,0 +1,5 @@
+#!/bin/sh
+sudo mv /usr/bin/gcc /usr/bin/gcc_temp
+sudo mv /usr/bin/gcc.bak /usr/bin/gcc
+sudo mv /usr/bin/gcc_temp /usr/bin/gcc.bak
+gcc --version | grep '^gcc.*'
