@@ -1,0 +1,28 @@
+#!/bin/sh
+
+./build_native.sh
+comd="ant debug install"
+if [ $# -eq 2 ];then
+comd="ant "$1" "$2
+elif [ $# -eq 1 ];then
+comd="ant debug "$1
+fi
+echo -e "\033[0;32;5m$comd \033[0m"
+#echo $comd
+sleep 5 
+#./build_native.sh
+#comd="ant debug"
+#if [ $# -eq 1 ];then
+#    if [ $1 = "release"];then
+#        comd="ant release"
+#    fi
+#elif [ $($# -eq 2) ];then
+#    if [ $($1 = "debug") -a $($2 = "install") ];then
+#    comd="ant debug install"
+#    fi
+#
+#    if [ $($1 = "release") -a $($2 = "install") ];then
+#comd="ant release install"
+#    fi
+#fi
+$comd
