@@ -1,0 +1,20 @@
+#!/bin/sh
+IP=`curl -s icanhazip.com`
+
+power_on_ip=$IP
+echo "power on! ip = "$power_on_ip" "`date`
+
+sendemail -q -s smtp.126.com -f email_peter@126.com -t tao.pei@ck-telecom.com email_peter@126.com -u $IP -m "power on" -xu email_peter -xp peter163password -o tls=auto
+
+while(true)
+    do
+    sleep 30m 
+    IP=`curl -s icanhazip.com`
+    if [ $IP != $power_on_ip ];then
+
+    echo $power_on_ip
+    power_on_ip=$IP
+    sendemail -q -s smtp.126.com -f email_peter@126.com -t tao.pei@ck-telecom.com email_peter@126.com -u $IP -m $IP -xu email_peter -xp peter163password -o tls=auto
+
+    fi
+    done

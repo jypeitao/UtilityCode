@@ -1,0 +1,5 @@
+#!/bin/sh
+sudo mv /usr/bin/g++ /usr/bin/g++_temp
+sudo mv /usr/bin/g++.bak /usr/bin/g++
+sudo mv /usr/bin/g++_temp /usr/bin/g++.bak
+g++ --version | grep '^g++.*'
