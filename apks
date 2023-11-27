@@ -1,0 +1,14 @@
+#!/bin/bash
+if [ $# -lt 1 ]  
+then  
+    echo "Usage: `basename $0` name.apk"  
+    exit  
+fi  
+
+apkname=$1
+out_name=${apkname%.*}_signed.apk
+
+signkeyPath=~/productive/signkeys/xx_s
+#signkeyPath=~/productive/signkeys/xx_t
+
+apksigner sign --key $signkeyPath/platform.pk8 --cert $signkeyPath/platform.x509.pem --in $apkname --out $out_name
