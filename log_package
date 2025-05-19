@@ -1,0 +1,57 @@
+#!/bin/bash
+if [ $# -lt 1 ]  
+then  
+    echo "Usage: `basename $0` pkg name [SERIAL]"  
+    exit  
+fi  
+
+count=`adb devices |grep device$|wc -l`
+if [ "$count" == "0" ]
+then
+    echo no device connceted
+    echo "Usage: `basename $0` pkg name [SERIAL]"  
+    exit
+elif [ $count -gt 1 ]
+then
+    if [ $# -lt 2 ];then
+        adb devices
+        echo "Usage: `basename $0` pkg name [SERIAL]"  
+        exit
+    else
+        serial=$2
+        pkg=$1
+    fi
+else
+    
+
+    pkg=$1
+    serial=`adb devices |grep device$`
+    serial=($serial);
+    serial=${serial[0]}
+fi
+
+echo ------------
+echo $pkg
+echo $serial
+echo ------------
+
+count=`adb devices |grep device$|wc -l`
+if [ "$count" == "0" ]
+then
+    echo device $serial not exist
+    echo "Usage: `basename $0` pkg name [SERIAL]"  
+    exit
+fi
+
+adb -s $serial shell pm list packages -U | grep $pkg
+if [ $? -ne 0 ]; then
+    echo "pkg name err"
+    echo "Usage: `basename $0` pkg name [SERIAL]"  
+    exit
+fi
+
+uid=`adb -s $serial shell pm list packages -U | grep $pkg | awk -F'uid:' '{print $2}'`
+
+echo $uid
+adb -s $serial shell logcat -v uid --uid=$uid
+
